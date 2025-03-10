@@ -110,4 +110,18 @@ textarea:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
+}
+
+/* Theme sombre */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #ecf0f1;
+    --text-secondary: #bdc3c7;
+    
+    --bg-primary: #2c3e50;
+    --bg-secondary: #34495e;
+    --bg-code: #1a252f;
+    
+    --border-color: #4a5568;
+  }
 } 

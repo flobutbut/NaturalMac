@@ -28,14 +28,14 @@ import CommandHistory from '@/components/command/CommandHistory.vue'
 }
 
 .app-header {
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   background-color: var(--surface-front);
   border-bottom: 1px solid var(--border-color);
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--text-primary);
 }
@@ -43,6 +43,7 @@ import CommandHistory from '@/components/command/CommandHistory.vue'
 .app-main {
   flex: 1;
   overflow: hidden;
+
 }
 
 .app-footer {

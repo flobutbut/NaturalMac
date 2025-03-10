@@ -1,6 +1,6 @@
 export default {
   app: {
-    title: 'NaturalMac'
+    title: 'Ask anything to your mac'
   },
   command: {
     input: {
@@ -28,7 +28,7 @@ export default {
       cancel: 'Annuler'
     },
     history: {
-      title: 'Controllez votre mac',
+      title: 'Historique des commandes',
       empty: 'Aucune commande pour le moment',
       clear: 'Effacer l\'historique',
       confirmClear: 'Êtes-vous sûr de vouloir effacer tout l\'historique ?'

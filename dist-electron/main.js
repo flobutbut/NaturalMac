@@ -1,14 +1,62 @@
 "use strict";
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+Object.defineProperty(exports, "__esModule", { value: true });
+const electron_1 = require("electron");
+const path_1 = require("path");
+const child_process_1 = require("child_process");
+// Chemins autorisés
+const allowedPaths = [
+    electron_1.app.getPath('home'),
+    electron_1.app.getPath('desktop'),
+    electron_1.app.getPath('documents'),
+    electron_1.app.getPath('downloads')
+];
+function isPathAllowed(command) {
+    const sensitivePatterns = [
+        /\brm\s+-rf\b/,
+        /\bsudo\b/,
+        /\/etc\b/,
+        /\/usr\b/,
+        /\.\.\//, // Empêche la navigation vers les répertoires parents
+    ];
+    return !sensitivePatterns.some(pattern => pattern.test(command));
+}
+// Gestionnaire de commande
+electron_1.ipcMain.handle('execute-command', async (event, command) => {
+    if (!isPathAllowed(command)) {
+        return {
+            success: false,
+            output: '',
+            error: 'Commande non autorisée pour des raisons de sécurité'
+        };
+    }
+    return new Promise((resolve) => {
+        (0, child_process_1.exec)(command, (error, stdout, stderr) => {
+            if (error) {
+                resolve({
+                    success: false,
+                    output: stderr,
+                    error: error instanceof Error ? error.message : 'Erreur inconnue',
+                    code: error.code
+                });
+                return;
+            }
+            resolve({
+                success: true,
+                output: stdout,
+                error: stderr,
+                code: 0
+            });
+        });
+    });
+});
 function createWindow() {
-    const mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 800,
+    const mainWindow = new electron_1.BrowserWindow({
+        width: 900,
+        height: 670,
         webPreferences: {
-            nodeIntegration: false,
+            nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: (0, path_1.join)(__dirname, 'preload.js')
         }
     });
     if (process.env.NODE_ENV === 'development') {
@@ -16,7 +64,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools();
     }
     else {
-        mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+        mainWindow.loadFile((0, path_1.join)(__dirname, '../dist/index.html'));
     }
     // Gérer les erreurs de chargement
     mainWindow.webContents.on('did-fail-load', () => {
@@ -26,16 +74,16 @@ function createWindow() {
         }, 1000);
     });
 }
-app.whenReady().then(() => {
+electron_1.app.whenReady().then(() => {
     createWindow();
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
+    electron_1.app.on('activate', () => {
+        if (electron_1.BrowserWindow.getAllWindows().length === 0) {
             createWindow();
         }
     });
 });
-app.on('window-all-closed', () => {
+electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit();
+        electron_1.app.quit();
     }
 });

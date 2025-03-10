@@ -28,7 +28,7 @@ import CommandHistory from '@/components/command/CommandHistory.vue'
 }
 
 .app-header {
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   background-color: var(--surface-front);
   border-bottom: 1px solid var(--border-color);
 }

@@ -85,6 +85,7 @@ watch(() => commands.value.length, () => {
   display: flex;
   flex-direction: column;
   background-color: var(--surface-front);
+  border-radius: 8px;
   overflow: hidden;
 }
 
