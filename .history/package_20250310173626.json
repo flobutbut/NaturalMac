@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build && electron-builder",
+    "preview": "vite preview",
+    "electron:dev": "vite --mode development",
+    "electron:build": "vue-tsc && vite build && electron-builder"
+  },
+  "build": {
+    "appId": "com.macos-assistant.app",
+    "productName": "MacOS Assistant",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
+  }
+} 

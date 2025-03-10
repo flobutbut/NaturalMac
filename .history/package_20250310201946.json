@@ -1,0 +1,47 @@
+{
+  "name": "macos-assistant",
+  "private": true,
+  "version": "0.0.1",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build && electron-builder",
+    "preview": "vite preview",
+    "electron:dev": "vite optimize --force && tsc -p tsconfig.electron.json && cross-env NODE_ENV=development concurrently \"vite dev\" \"wait-on tcp:5173 && electron .\"",
+    "electron:build": "vue-tsc && vite build && electron-builder"
+  },
+  "dependencies": {
+    "@vueuse/core": "^10.7.0",
+    "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/uuid": "^9.0.8",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^26.2.1",
+    "electron-builder": "^24.6.4",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vue-tsc": "^1.8.11",
+    "wait-on": "^8.0.2"
+  },
+  "build": {
+    "appId": "com.macos-assistant.app",
+    "productName": "MacOS Assistant",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
+  }
+}
